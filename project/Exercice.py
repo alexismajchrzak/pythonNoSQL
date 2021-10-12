@@ -6,29 +6,25 @@ import json
 app = Flask(__name__)
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET","POST"])
 def getList():
     body = ""
-    tab_body = ["","","",""]
+    tab_body = []
     if request.method == "GET":
         counter = 0
         while True:
             try:
-                with open(f'users/{counter}.txt') as f:
+                with open(f'project/users/{counter}.txt') as f:
                     lines = f.readlines()
                     count = 0
                     for line in lines:
                         count += 1
                         print(f'fichiers {counter} ligne {count}: {line}')
                         body = body + f'fichiers {counter} ligne {count}: {line} <br>'
-                        tab_body[counter] = body
+                        test = tab_body.append(body)
                 counter = counter + 1
             except IOError:
                 return body
-
-
-    elif request.method == "POST":
-        pass
 
     print(f'arguments : {request.args}')
     print(f'body: {request.get_json()}')
